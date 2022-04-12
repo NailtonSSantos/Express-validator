@@ -53,6 +53,10 @@ app.post('/validator-persinalize', [
 app.post('/register-user', [
     body("email").isEmail().withMessage("Favor inserir um e-mail válido"),
     body("email").custom(value => {
+        //Não precisa necessariamente dessa validação, estou usando apenas para retornar a mensagem e deixar mais bonito
+        if(!value){
+            return Promisse.reject("O e-mail é obrigatório!")
+        }
         if(value == "teste@teste.com"){
             return Promise.reject("E-mail já cadastrado")
         }
@@ -60,7 +64,7 @@ app.post('/register-user', [
     }),
     body("name").isLength({min: 3}).withMessage("Nome precisa ter no mínimo 3 caracteres"),
     body("password").isLength({min: 5}).withMessage("Senha precisa ter no mínimo 3 caracteres"),
-    body("age").isNumeric().withMessage("Idade precisa ser um número"),
+    body("age").isNumeric().withMessage("Idade precisa ser um número")
 ], (req, res) => {
     const errors = validationResult(req)
     if(!errors.isEmpty()){
