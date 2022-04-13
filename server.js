@@ -55,7 +55,7 @@ app.post('/register-user', [
     body("email").custom(value => {
         //Não precisa necessariamente dessa validação, estou usando apenas para retornar a mensagem e deixar mais bonito
         if(!value){
-            return Promisse.reject("O e-mail é obrigatório!")
+            return Promise.reject("O e-mail é obrigatório!")
         }
         if(value == "teste@teste.com"){
             return Promise.reject("E-mail já cadastrado")
@@ -63,7 +63,7 @@ app.post('/register-user', [
         return true
     }),
     body("name").isLength({min: 3}).withMessage("Nome precisa ter no mínimo 3 caracteres"),
-    body("password").isLength({min: 5}).withMessage("Senha precisa ter no mínimo 3 caracteres"),
+    body("password").isLength({min: 6}).withMessage("Senha precisa ter no mínimo 6 caracteres"),
     body("age").isNumeric().withMessage("Idade precisa ser um número")
 ], (req, res) => {
     const errors = validationResult(req)
